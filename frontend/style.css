@@ -1,0 +1,223 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
+  overflow: hidden; /* Prevent scrolling */
+}
+
+#game-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  position: absolute;
+  top: 5%;
+  z-index: 10;
+}
+
+/* Container for the two songs (left and right) */
+#artist-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 5; /* Make sure the container is below the heading */
+}
+
+.artist-card {
+  width: 50%;
+  height: 100vh; /* Ensure each card takes up the full height of the viewport */
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer; /* Make album covers clickable */
+  transition: transform 0.3s ease-in-out;
+}
+
+.artist-card img {
+  width: 100vw; /* Ensure the image takes up the full width of the viewport */
+  height: 100vh; /* Ensure the image takes up the full height of the viewport */
+  object-fit: cover; /* Ensure the image covers the container without stretching */
+  transition: opacity 0.3s ease; /* Fade effect when selected */
+}
+
+.artist-info {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  color: black;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  font-size: 1.5rem;
+  text-align: center;
+  z-index: 10; /* Ensure the info stays on top of the image */
+}
+
+.artist-info h2 {
+  margin-bottom: 10px;
+}
+
+.artist-info p {
+  font-size: 1.2rem;
+}
+
+#vs {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 4rem; /* Increase font size for better visibility */
+  color: white;
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+  padding: 10px 20px;
+  border-radius: 10px;
+  z-index: 10;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); /* Add shadow to make it pop */
+}
+
+/* Result Message */
+#result {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  z-index: 10;
+  padding: 20px;
+  background-color: white; /* White background for the result */
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Shadow for a lifted effect */
+  text-align: center;
+}
+
+/* Streak Counter */
+#streak {
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  position: absolute;
+  top: 10px; /* Streak will stay at the top of the screen */
+  left: 10px; /* Align to the left */
+  transform: translateX(0); /* Remove horizontal centering */
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 20; /* Ensure streak stays on top */
+}
+
+/* High Score Counter */
+#high-score {
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  position: absolute;
+  top: 10px; /* Place it in the top right */
+  right: 10px; /* Align to the right */
+  transform: translateX(0); /* Remove horizontal centering */
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 20; /* Ensure high score stays on top */
+}
+
+/* Button Container */
+#buttons-container {
+  position: absolute;
+  top: 50%; /* Center the container vertically within the second song */
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the container horizontally and vertically */
+  display: flex;
+  flex-direction: column; /* Stack the buttons vertically */
+  align-items: center; /* Center the buttons horizontally */
+  z-index: 10; /* Ensure buttons are on top of everything else */
+}
+
+/* Longer and Shorter Buttons */
+.guess-button {
+  background: transparent; /* Clear background */
+  border: 4px solid white; /* Thicker white border */
+  color: white; /* White text */
+  font-size: 1.5rem; /* Large text */
+  font-weight: bold; /* Bold text */
+  padding: 20px 40px; /* Adequate padding for readability */
+  border-radius: 25px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  margin: 10px 0; /* Space between buttons */
+  transition: background 0.3s ease, color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.guess-button:hover {
+  background-color: white; /* White background on hover */
+  color: black; /* Black text color on hover */
+}
+
+#game-over-screen {
+  position: fixed;  /* Make it fixed at the center of the screen */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 30; /* Ensure it's above everything else */
+  font-size: 2rem;
+  border-radius: 10px;
+}
+
+#game-over-screen h1 {
+  margin-bottom: 20px;
+}
+
+#game-over-screen p {
+  margin: 10px 0;
+}
+
+#retry-button {
+  padding: 15px 30px;
+  background-color: #4CAF50; /* Green background for retry button */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+#retry-button:hover {
+  background-color: #45a049; /* Darker green on hover */
+}

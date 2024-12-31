@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Higher or Lower: Jamaraz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+      <div id="high-score">
+        High Score: 0
+      </div>
+      
+      <div id="streak">
+        Current Streak: 0
+      </div>
+      
+        <div id="artist-container">
+            <div id="artist1" class="artist-card">
+                <img id="artist1-image" alt="Track 1" />
+                <div class="artist-info">
+                    <h2 id="artist1-name"></h2>
+                    <p id="artist1-duration"></p> <!-- First song duration -->
+                </div>
+            </div>
+            <div id="vs">VS</div>
+            <div id="artist2" class="artist-card">
+                <div id="buttons-container">
+                    <button id="longer" class="guess-button">Longer</button>
+                    <button id="shorter" class="guess-button">Shorter</button>
+                </div>
+                <img id="artist2-image" alt="Track 2" />
+                <div class="artist-info">
+                    <h2 id="artist2-name"></h2>
+                </div>
+            </div>
+        </div>
+      <div id="result"></div>
+    </div>
+    <div id="game-over-screen" style="display: none;">
+      <h1>Game Over</h1>
+      <p>Your Streak: <span id="final-streak"></span></p>
+      <p>Your High Score: <span id="final-high-score"></span></p>
+      <button id="retry-button">Play Again</button>
+  </div>  
+    <script src="app.js"></script>
+</body>
+</html>
