@@ -72,21 +72,24 @@ def index():
 def game():
     # Check if the 'songs' session variable exists, if not, initialize it
     songs = session.get('songs', [])
+    
     if not songs:  # If no songs exist, fetch the songs for the artist
-        songs = get_songs_for_artist()  # Make sure to get the songs from the API
+        print("Fetching new songs")  # Debug print to check if we're fetching songs
+        songs = get_songs_for_artist()  # Fetch the songs from Spotify
         session['songs'] = songs  # Store them in the session
 
     score = session.get('score', 0)
     high_score = session.get('high_score', 0)
 
     if len(songs) < 2:
-        return redirect(url_for('index'))
+        return redirect(url_for('index'))  # Not enough songs to play the game
 
+    # If it's a POST request (button press)
     if request.method == 'POST':
-        # Retrieve the current song pair from the session
         current_pair = session.get('current_pair')
         if not current_pair:
-            return redirect(url_for('index'))  # Restart the game if session is invalid
+            print("No current pair, redirecting")  # Debug message to check if this happens
+            return redirect(url_for('index'))  # Restart game if session data is invalid
 
         song1, song2 = current_pair['song1'], current_pair['song2']
         guess = request.form.get('guess')
@@ -101,12 +104,10 @@ def game():
         else:
             message = "❌ Incorrect! Game Over."
             game_over = True
-            # Update high score if necessary
             if score > high_score:
-                session['high_score'] = score  # Save new high score to session
+                session['high_score'] = score  # Save high score to session
                 high_score = score
-            # Reset the score if game over
-            session['score'] = 0
+            session['score'] = 0  # Reset score after game over
             return render_template(
                 'game.html',
                 song1=song1,
@@ -116,7 +117,7 @@ def game():
                 message=message,
                 song1_popularity=song1['popularity'],
                 song2_popularity=song2['popularity'],
-                high_score=high_score  # Pass high score to the template
+                high_score=high_score
             )
 
         # Select a new pair of songs for the next round
@@ -125,11 +126,12 @@ def game():
 
         return render_template('game.html', song1=song1, song2=song2, score=session['score'], game_over=False, high_score=high_score)
 
-    # If no POST, just show the initial songs
+    # If it's a GET request (first visit), show the initial pair of songs
     song1, song2 = random.sample(songs, 2)
     session['current_pair'] = {'song1': song1, 'song2': song2}
 
     return render_template('game.html', song1=song1, song2=song2, score=score, game_over=False, high_score=high_score)
+
 
 
 
