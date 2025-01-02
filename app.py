@@ -70,7 +70,7 @@ def index():
         print("First visit, setting session data")
         songs = get_songs_for_artist()  # Initialize songs on first visit
         session['songs'] = songs  # Save to session
-    return render_template('index.html')
+    return redirect(url_for('game'))
 
 
 @app.route('/game', methods=['GET', 'POST'])
