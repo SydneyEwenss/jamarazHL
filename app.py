@@ -72,17 +72,18 @@ def index():
         songs = get_songs_for_artist()  # Initialize songs on first visit
         session['songs'] = songs  # Save to session
     return redirect(url_for('game'))
+    
 
 
 @app.route('/game', methods=['GET', 'POST'])
 def game():
-    # Get songs and score from the session, if they exist
+    # Initialize 'score' and 'high_score' if they don't exist in the session
+    score = session.get('score', 0)  # Default to 0 if 'score' doesn't exist
+    high_score = session.get('high_score', 0)  # Default to 0 if 'high_score' doesn't exist
+
     songs = session.get('songs', [])
-    score = session.get('score', 0)
-    high_score = session.get('high_score', 0)
     
     if not songs:
-        # If no songs are in the session, fetch them from the API
         songs = get_songs_for_artist()
         session['songs'] = songs
     
@@ -102,8 +103,7 @@ def game():
         # Check if the guess is correct
         if (guess == '1' and song1['popularity'] > song2['popularity']) or \
            (guess == '2' and song2['popularity'] > song1['popularity']):
-            session['score'] += 1  # Update score in session
-            score = session['score']
+            session['score'] = score + 1  # Update score in session
             message = "✅ Correct!"
             game_over = False
         else:
@@ -112,7 +112,6 @@ def game():
             # Update high score if necessary
             if score > high_score:
                 session['high_score'] = score  # Save new high score to session
-                high_score = score
             session['score'] = 0  # Reset score after game over
 
             return render_template(
@@ -138,6 +137,7 @@ def game():
     session['current_pair'] = {'song1': song1, 'song2': song2}
 
     return render_template('game.html', song1=song1, song2=song2, score=score, game_over=False, high_score=high_score)
+
 
 @app.route('/restart', methods=['POST'])
 def restart_game():
