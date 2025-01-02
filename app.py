@@ -66,7 +66,12 @@ def get_songs_for_artist():
 
 @app.route('/')
 def index():
+    if 'songs' not in session:
+        print("First visit, setting session data")
+        songs = get_songs_for_artist()  # Initialize songs on first visit
+        session['songs'] = songs  # Save to session
     return render_template('index.html')
+
 
 @app.route('/game', methods=['GET', 'POST'])
 def game():
