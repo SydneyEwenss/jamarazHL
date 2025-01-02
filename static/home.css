@@ -1,0 +1,91 @@
+/* General Reset and Body Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #1c1c1c; /* Dark background to match the game */
+    color: white;
+    overflow: hidden;
+}
+
+/* Homepage container */
+.homepage-container {
+    background-color: #2c2c2c; /* Dark background for homepage to match the game */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+}
+
+/* Header Style */
+h1 {
+    color: #f0f0f0; /* Light text for header */
+    font-size: 3rem;
+    margin-bottom: 20px;
+    text-align: center;
+    z-index: 2;
+    position: relative;
+}
+
+/* Game description */
+.game-description {
+    font-size: 1.2rem;
+    margin: 10px 0;
+    color: #ccc; /* Light gray for description */
+    z-index: 2;
+    position: relative;
+}
+
+/* Play Button Style */
+.play-button {
+    padding: 15px 30px;
+    background-color: #4CAF50; /* Green button to match modal button */
+    color: white;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.play-button:hover {
+    background-color: #45a049; /* Hover effect for button */
+}
+
+/* Footer Style */
+.footer {
+    margin-top: 30px;
+    font-size: 14px;
+    color: #7f8c8d; /* Light gray for footer */
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .homepage-container {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 2rem; /* Slightly smaller header on mobile */
+    }
+
+    .game-description {
+        font-size: 1rem; /* Smaller description on mobile */
+    }
+
+    .play-button {
+        padding: 12px 25px; /* Slightly smaller button on mobile */
+        font-size: 1rem;
+    }
+}

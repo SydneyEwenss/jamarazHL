@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Higher or Lower Game</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+</head>
+<body>
+
+    <div class="homepage-container">
+        <h1>Welcome to the Ricky Jamaraz Higher or Lower Game!</h1>
+        <p class="game-description">
+            In this game, two songs will be displayed, and you have to guess which one is more popular based on its Spotify popularity score.
+            <br><br>
+            Each correct guess earns you a point! The game ends when you make an incorrect guess. Try to get as many correct as you can and beat the high score.
+        </p>
+
+        <a href="{{ url_for('game') }}">
+            <button class="play-button">Start Game</button>
+        </a>
+
+        <div class="footer">
+            <p>Made with NO LOVE by SYDDERSLMAO (check out my twitch)</p>
+            <a href="http://www.twitch.tv/sydderslmao">Click Me!</a>
+        </div>
+    </div>
+
+</body>
+</html>

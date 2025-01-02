@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Higher or Lower Game</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        // Function to handle song container click
+        function selectSong(songNumber) {
+            // Create a hidden form to submit the guess
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/game';
+            
+            var input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'guess';
+            input.value = songNumber;
+            form.appendChild(input);
+            
+            document.body.appendChild(form);  // Append the form to the body
+            form.submit();  // Submit the form
+        }
+
+        // Function to display the game over modal
+        function showGameOverModal(score, message, song1Name, song1Popularity, song2Name, song2Popularity, highScore) {
+            document.getElementById("game-over-modal").style.display = "block";
+            document.getElementById("final-score").textContent = "Your final score: " + score;
+            document.getElementById("high-score").textContent = "High Score: " + highScore; // Display high score
+            document.getElementById("incorrect-message").textContent = message;
+            
+            // Display the popularity of the two songs
+            document.getElementById("song1-info").textContent = `${song1Name} (Popularity: ${song1Popularity})`;
+            document.getElementById("song2-info").textContent = `${song2Name} (Popularity: ${song2Popularity})`;
+        }
+
+        // Function to restart the game (reload the page)
+        function restartGame() {
+            window.location.href = "/game";  // Reload the page to start a new game
+        }
+
+        // Function to close the modal (navigate away or close the game)
+        function closeGame() {
+            window.location.href = "/";  // Redirect to home page (or exit the game)
+        }
+    </script>
+</head>
+<body>
+    <div class="score-container">
+        <p>Score: {{ score }} | High Score: {{ high_score }}</p> <!-- Displaying score and high score -->
+    </div>
+
+    <div class="game-container">
+        <div class="song" style="background-image: url('{{ song1['album_cover'] }}');" onclick="selectSong(1)">
+            <h3>{{ song1['name'] }}</h3>
+        </div>
+        <div class="song" style="background-image: url('{{ song2['album_cover'] }}');" onclick="selectSong(2)">
+            <h3>{{ song2['name'] }}</h3>
+        </div>
+    </div>
+
+    {% if game_over %}
+        <!-- Game Over Modal will display here -->
+        <div id="game-over-modal" class="modal">
+            <div class="modal-content">
+                <h1>GAME OVER</h1>
+                <p id="final-score">Final score: {{ score }}</p>
+                <p id="high-score">High Score: {{ high_score }}</p> <!-- Displaying the high score here -->
+                <button onclick="restartGame()">Play Again</button>
+                <button onclick="closeGame()">Exit</button>
+            </div>
+        </div>
+    {% endif %}
+</body>
+</html>
